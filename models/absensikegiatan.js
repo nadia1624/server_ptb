@@ -30,8 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     gambar: DataTypes.STRING(255)
   }, {
     sequelize,
-    modelName: 'Absensi_Kegiatan',
-    tableName: 'Absensi_Kegiatans'
+    modelName: 'AbsensiKegiatan'
   });
   return AbsensiKegiatan;
 };

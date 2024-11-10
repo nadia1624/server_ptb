@@ -1,17 +1,18 @@
-//kegiatan
 'use strict';
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Kegiatan extends Model {
     static associate(models) {
-      this.belongsToMany(models.User, { 
+      // Asosiasi Kegiatan dengan AbsensiKegiatan
+      Kegiatan.belongsToMany(models.AbsensiKegiatan, {
         through: models.AbsensiKegiatan,
-        foreignKey: 'id_kegiatan'
+        foreignKey: 'id_kegiatan',  // Pastikan ini sesuai dengan nama kolom di model AbsensiKegiatan
+        //as: 'absensikegiatans'      // Nama alias untuk asosiasi
       });
     }
   }
-  
+
   Kegiatan.init({
     id_kegiatan: {
       type: DataTypes.INTEGER,
@@ -24,12 +25,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     deskripsi: DataTypes.TEXT,
     status: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.INTEGER, // Gunakan salah satu tipe data untuk status
       allowNull: false
-    },
-    status: {
-        type: DataTypes.INTEGER,
-        allowNull: true
     },
     jam_kegiatan: {
       type: DataTypes.TIME,
@@ -47,6 +44,6 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   });
-  
+
   return Kegiatan;
 };
