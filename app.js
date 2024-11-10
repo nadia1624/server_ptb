@@ -9,7 +9,7 @@ const PORT = process.env.DB_PORT;
 app.use(express.json());
 
 app.get("/api", (req,res)=> {
-    res.send("Hello world")
+    res.json("Hello world")
 })
 
 
