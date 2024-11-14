@@ -2,11 +2,16 @@ const express = require("express");
 const dotenv = require("dotenv");
 const app = express();
 
+
 dotenv.config()
 
 const prokerRouter = require("./routes/prokerRoute");
+const absensiRouter = require("./routes/absensiRoute");
+const { otomatisUpdate } = require("./controllers/absensiControllers");
 
+app.use(express.json());
 app.use('/proker',prokerRouter);
+app.use('/absensi',absensiRouter)
 
 app.get('/', (req, res) => {
     res.render('login');
@@ -15,10 +20,11 @@ app.get('/', (req, res) => {
 const PORT = process.env.DB_PORT;
 
 app.use(express.json());
-
+app.use(otomatisUpdate)
 app.get("/api", (req,res)=> {
     res.json("Hello world")
 })
+app.get("/test",otomatisUpdate)
 
 
 
