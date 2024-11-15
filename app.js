@@ -5,12 +5,17 @@ const app = express();
 
 dotenv.config()
 
+const authRoutes = require('./routes/authRoute');
 const prokerRouter = require("./routes/prokerRoute");
 const absensiRouter = require("./routes/absensiRoute");
 const profileRouter = require("./routes/profileRoute")
 const { otomatisUpdate } = require("./controllers/absensiControllers");
 
+const { authenticateToken } = require('./middleware/authToken');
+
 app.use(express.json());
+
+app.use('/auth', authRoutes);
 app.use('/proker',prokerRouter);
 app.use('/absensi',absensiRouter)
 app.use('/profil',profileRouter)
