@@ -60,14 +60,16 @@ const createAbsensi = async(req,res)=>{
         console.log(user.jadwal)
         console.log(currentWeek)
         console.log(existingRekap?.minggu_ke)
-        // Validasi hari jadwal
-        if (hari[day] !== user.jadwal || currentWeek !== existingRekap?.minggu_ke) {
-            return res.status(400).json({ message: 'It is not your schedule'});
-        }
+        console.log(existingRekap)
+
 
 
         if (existingRekap) {
             // Jika rekap minggu ini sudah ada, update status absensi user yang login
+                    // Validasi hari jadwal
+        if (hari[day] !== user.jadwal || currentWeek !== existingRekap?.minggu_ke) {
+            return res.status(400).json({ message: 'It is not your schedule'});
+        }
             await Absensi.update(
                 { status: 1,
                     gambar: gambar
