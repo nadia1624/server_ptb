@@ -1,15 +1,16 @@
 // seeders/xxxxxx-demo-users.js
-
+const bcrypt = require("bcrypt");
 'use strict';
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('Users', [
       {
+        id_user: 1,
         id_divisi: 1,
         nim: '2211521004',
         email: 'nadyadearihanifah@gmail.com',
-        password: 'nadia1234',  // Gunakan hash password sebenarnya pada aplikasi production
+        password: await bcrypt.hash("nadia1234", 10),  // Gunakan hash password sebenarnya pada aplikasi production
         jabatan: 'Ketua HMSI',
         jadwal: 'Senin',
         gambar: '',
@@ -19,10 +20,11 @@ module.exports = {
         updatedAt: new Date()
       },
       {
+        id_user: 2,
         id_divisi: 2,
         nim: '2211523010',
         email: 'azhrameisa@gmail.com',
-        password: 'meisa1234',
+        password: await bcrypt.hash('meisa1234', 10),
         jabatan: 'Ketua PSDM',
         jadwal: 'Selasa',
         gambar: '',
@@ -32,10 +34,11 @@ module.exports = {
         updatedAt: new Date()
       },
       {
+        id_user: 3,
         id_divisi: 1,
         nim: '2211523014',
         email: 'raniashofi@gmail.com',
-        password: 'rania1234',
+        password: await bcrypt.hash('rania1234', 10),
         jabatan: 'Sekretaris HMSI',
         jadwal: 'Rabu',
         gambar: '',

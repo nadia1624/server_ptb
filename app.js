@@ -7,11 +7,13 @@ dotenv.config()
 
 const prokerRouter = require("./routes/prokerRoute");
 const absensiRouter = require("./routes/absensiRoute");
+const profileRouter = require("./routes/profileRoute")
 const { otomatisUpdate } = require("./controllers/absensiControllers");
 
 app.use(express.json());
 app.use('/proker',prokerRouter);
 app.use('/absensi',absensiRouter)
+app.use('/profil',profileRouter)
 
 app.get('/', (req, res) => {
     res.render('login');
