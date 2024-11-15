@@ -6,6 +6,7 @@ dotenv.config();
 // Middleware untuk autentikasi token
 const authenticateToken = (req, res, next) => {
   const secret = process.env.SECRET_TOKEN;
+
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1]; // Ambil token dari header Authorization
 
@@ -21,7 +22,7 @@ const authenticateToken = (req, res, next) => {
       return res.sendStatus(403); // Jika token tidak valid
     }
 
-    req.user = user; // Menyimpan data user dari token
+    req.user = user.user; // Menyimpan data user dari token
     next(); // Lanjutkan ke route berikutnya
   });
 };

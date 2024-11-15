@@ -39,10 +39,9 @@ const getCreateAbsensi = async(req,res)=>{
 }
 const createAbsensi = async(req,res)=>{
     try {
-        const user = {
-            id_user : 2,
-            jadwal: "Selasa",
-        }
+        const user = req.user;
+        console.log(user)
+
         const { gambar } = req.body;
         const day = new Date().getDay();
 
@@ -57,16 +56,22 @@ const createAbsensi = async(req,res)=>{
 
         // Cek apakah rekap absensi untuk minggu ini sudah ada
         let existingRekap = await Rekapan.findOne({ where: { minggu_ke: currentWeek } });
-        
+        console.log( hari[day])
+        console.log(user.jadwal)
+        console.log(currentWeek)
+        console.log(existingRekap?.minggu_ke)
         // Validasi hari jadwal
-        if (hari[day] !== user.jadwal && currentWeek !== existingRekap.minggu_ke) {
+        if (hari[day] !== user.jadwal || currentWeek !== existingRekap?.minggu_ke) {
             return res.status(400).json({ message: 'It is not your schedule'});
         }
+
 
         if (existingRekap) {
             // Jika rekap minggu ini sudah ada, update status absensi user yang login
             await Absensi.update(
-                { status: 1 },
+                { status: 1,
+                    gambar: gambar
+                 },
                 { where: { id_user:user.id_user} }
             );
         } else {
