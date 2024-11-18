@@ -1,11 +1,12 @@
 const{Absensi, Rekapan, User} =  require("../models/index");
 const { where} = require("sequelize");
-const {Op} = require('sequelize')
+const {Op} = require('sequelize');
+
 
 const lihatAbsensi = async(req,res)=>{
     try {
         const lihatAbsensi = await Absensi.findAll({
-            where:{id_user:1}
+            where:{id_user:req.user.id_user}
         })
         res.json(lihatAbsensi)
     } catch (error) {
@@ -19,7 +20,7 @@ const lihatDetailAbsensi = async(req,res)=>{
         const id_rekapan = req.params.id_rekapan;
         const lihatDetailAbsensi = await Absensi.findOne({
             where:{id_rekapan,
-                id_user:1
+                id_user:req.user.id_user
             }
         })
         res.json(lihatDetailAbsensi)
@@ -29,26 +30,18 @@ const lihatDetailAbsensi = async(req,res)=>{
     }
 }
 
-const getCreateAbsensi = async(req,res)=>{
-    try {
-        
-    } catch (error) {
-        console.error("Error during login: ", error);
-        res.status(500).json({ message: "Internal server error" }); 
-    }
-}
 const createAbsensi = async(req,res)=>{
     try {
         const user = req.user;
         console.log(user)
 
-        const { gambar } = req.body;
-        const day = new Date().getDay();
-
+        // const { gambar } = req.body;
+        const gambar = req.file ? req.file.filename : null;
         if (!gambar) {
-            return res.status(400).json({ message: "Incomplete request data" });
+            return res.status(400).json({ message: 'Incomplete request data: No file uploaded' });
         }
 
+        const day = new Date().getDay();
         const hari = ["Minggu","Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 
         // Mendapatkan minggu saat ini
@@ -147,10 +140,10 @@ const otomatisUpdate = async (req, res) => {
       res.status(500).json({ message: "Internal server error" });
     }
   };
+  
 
 module.exports ={lihatAbsensi,
     lihatDetailAbsensi,
     createAbsensi,
-    getCreateAbsensi,
     otomatisUpdate
 }
