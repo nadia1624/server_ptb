@@ -16,9 +16,9 @@ const { authenticateToken } = require('./middleware/authToken');
 app.use(express.json());
 
 app.use('/auth', authRoutes);
-app.use('/proker',prokerRouter);
-app.use('/absensi',absensiRouter)
-app.use('/profil',profileRouter)
+app.use('/proker',authenticateToken, prokerRouter);
+app.use('/absensi', authenticateToken, absensiRouter)
+app.use('/profil',authenticateToken, profileRouter)
 
 app.get('/', (req, res) => {
     res.render('login');

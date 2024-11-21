@@ -117,14 +117,13 @@ const otomatisUpdate = async (req, res) => {
           },
         },
       });
-  
+      console.log(latedUsers);
      
       if (!latedUsers.length) {
         return res.status(404).json({ message: "No users found with the specified condition." });
       }
   
-      
-      const updatedAbsensiPromises = latedUsers.map(async (user) => {
+            const updatedAbsensiPromises = latedUsers.map(async (user) => {
         return user.update({ status: 2 }); // Set the status to 2 for each user
       });
   
