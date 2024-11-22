@@ -11,14 +11,12 @@ const absensiRouter = require("./routes/absensiRoute");
 const profileRouter = require("./routes/profileRoute")
 const { otomatisUpdate } = require("./controllers/absensiControllers");
 
-const { authenticateToken } = require('./middleware/authToken');
-
 app.use(express.json());
 
 app.use('/auth', authRoutes);
-app.use('/proker',authenticateToken, prokerRouter);
-app.use('/absensi', authenticateToken, absensiRouter)
-app.use('/profil',authenticateToken, profileRouter)
+app.use('/proker', prokerRouter);
+app.use('/absensi', absensiRouter)
+app.use('/profil', profileRouter)
 
 app.get('/', (req, res) => {
     res.render('login');
