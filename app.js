@@ -27,11 +27,11 @@ app.get('/', (req, res) => {
 const PORT = process.env.DB_PORT;
 
 app.use(express.json());
-app.use(otomatisUpdate)
+otomatisUpdate()
 app.get("/api", (req,res)=> {
     res.json("Hello world")
 })
-app.get("/test",otomatisUpdate)
+
 
 
 
