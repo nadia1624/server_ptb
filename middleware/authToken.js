@@ -7,8 +7,8 @@ dotenv.config();
 const authenticateToken = (req, res, next) => {
   const secret = process.env.SECRET_TOKEN;
 
-  const token = req.headers["authorization"];
-  //  const token = authHeader && authHeader.split(" ")[1]; // Ambil token dari header Authorization
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
 
   if (!token) {
     console.log("No token provided");
