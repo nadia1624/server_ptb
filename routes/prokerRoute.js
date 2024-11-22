@@ -9,5 +9,6 @@ router.get('/detailproker/:id', authenticateToken, ProkerController.getProkerDet
 router.post('/detail/:id_proker', authenticateToken, upload.single("gambar"), ProkerController.addProkerDetail);
 router.get('/detail/:id_detailproker', authenticateToken, ProkerController.lihatDetailProker);
 router.put('/status/:id_proker', authenticateToken, ProkerController.updateProkerStatus);
+router.get("/alldetailproker", authenticateToken, ProkerController.allDetailProker)
 
 module.exports = router;

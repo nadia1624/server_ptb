@@ -116,13 +116,20 @@ const updateProkerStatus = async (req, res) => {
       return res.status(400).json({ message: 'Detail proker belum lengkap, tidak bisa menandai selesai' });
     }
   } catch (error) {
-    console.error("Error menandai proker selesai:", error);
-    res.status(500).json({
-      message: "Gagal menandai proker selesai",
-      error: error.message,
-    });
+    console.error("Error during login: ", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
+const allDetailProker = async (req,res) => {
+  try {
+    const allDetailProker = await detail_proker.findAll()
+    res.json(allDetailProker)
+  } catch (error) {
+    console.error("Error during login: ", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
 
-module.exports ={lihatProker,getProkerDetails,addProkerDetail,updateProkerStatus,lihatDetailProker}
+
+module.exports ={lihatProker,getProkerDetails,addProkerDetail,updateProkerStatus,lihatDetailProker, allDetailProker}
