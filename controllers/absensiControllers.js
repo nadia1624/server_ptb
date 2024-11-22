@@ -105,23 +105,26 @@ function getWeekOfYear(date) {
     return Math.ceil(hariDalamTahun / 7);  
 }
 
-const otomatisUpdate = async (req, res) => {
+const otomatisUpdate = async () => {
     try {
-    
+        const currentWeek = getWeekOfYear(new Date());
       const latedUsers = await Absensi.findAll({
-        include: {
-          model: Rekapan,
-          as: "rekapan",
-          where: {
-            minggu_ke: { [Op.lt]: 2 },
-          },
-        },
+        where : { status : 0}, 
+            include: {
+                model: Rekapan,
+                as: "rekapan",
+                where: {
+                  minggu_ke: { [Op.lt]: currentWeek }
+                }
+              }
+
       });
       console.log(latedUsers);
      
       if (!latedUsers.length) {
-        return res.status(404).json({ message: "No users found with the specified condition." });
-      }
+        console.log("No users found with the specified condition.");
+        return
+    }
   
             const updatedAbsensiPromises = latedUsers.map(async (user) => {
         return user.update({ status: 2 }); // Set the status to 2 for each user
@@ -133,10 +136,8 @@ const otomatisUpdate = async (req, res) => {
       console.log("Update successful");
   
    
-      res.json(updatedAbsensi);
     } catch (error) {
       console.error("Error during update:", error);
-      res.status(500).json({ message: "Internal server error" });
     }
   };
   
