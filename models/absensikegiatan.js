@@ -1,36 +1,37 @@
-
-'use strict';
-const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class AbsensiKegiatan extends Model {
-    static associate(models) {
-      AbsensiKegiatan.belongsTo(models.User, {
-        foreignKey: 'id_user',
-        as: 'user'
-      });
-      AbsensiKegiatan.belongsTo(models.Kegiatan, {
-        foreignKey: 'id_kegiatan',
-        as: 'kegiatan'
-      });
+  const AbsensiKegiatan = sequelize.define(
+    "AbsensiKegiatan",
+    {
+      id_user: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        references: {
+          model: "Users",
+          key: "id_user",
+        },
+      },
+      id_kegiatan: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        references: {
+          model: "Kegiatans",
+          key: "id_kegiatan",
+        },
+      },
+      status_absensi: DataTypes.INTEGER,
+      gambar: DataTypes.STRING,
+    },
+    {
+      tableName: "AbsensiKegiatans", // Sesuaikan dengan nama tabel
     }
-  }
-  AbsensiKegiatan.init({
-    id_user: {
-      type: DataTypes.INTEGER,
-      primaryKey: true
-    },
-    id_kegiatan: {
-      type: DataTypes.INTEGER,
-      primaryKey: true
-    },
-    status_absensi: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    gambar: DataTypes.STRING(255)
-  }, {
-    sequelize,
-    modelName: 'AbsensiKegiatan'
-  });
+  );
+
+  AbsensiKegiatan.associate = (models) => {
+    AbsensiKegiatan.belongsTo(models.Kegiatan, {
+      as: "kegiatan", // Alias jika diperlukan
+      foreignKey: "id_kegiatan",
+    });
+  };
+
   return AbsensiKegiatan;
 };
