@@ -36,7 +36,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     status: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: false,
+      defaultValue: 0, 
+      validate: {
+        isIn: [[0, 1, 2]],
+      },
     },
     deskripsi: {
       type: DataTypes.TEXT,

@@ -23,7 +23,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       status: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
       },
       deskripsi: {
         type: Sequelize.TEXT

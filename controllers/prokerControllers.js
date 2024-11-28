@@ -92,7 +92,7 @@ const updateProkerStatus = async (req, res) => {
 
     // Cari proker berdasarkan id_proker
     const proker = await Proker.findOne({ where: { id_proker } });
-    
+
     if (!proker) {
       return res.status(404).json({ message: 'Proker tidak ditemukan' });
     }
@@ -100,26 +100,42 @@ const updateProkerStatus = async (req, res) => {
     // Cek apakah semua detail dalam proker ini sudah selesai
     const allDetails = await detail_proker.findAll({ where: { id_proker } });
 
-    // Jika semua detail sudah selesai (misalnya status gambar tidak null dan judul detail ada)
+    // Periksa apakah ada detail proker yang dimulai tetapi belum selesai
+    const hasInProgress = allDetails.some(detail => detail.gambar || detail.judul_detail_proker);
     const allCompleted = allDetails.every(detail => detail.gambar && detail.judul_detail_proker); // Cek apakah semua detail memiliki gambar dan judul
 
+    // Tentukan status berdasarkan kondisi detail
     if (allCompleted) {
-      // Update status proker menjadi 1 (selesai)
-      proker.status = 1;
-      await proker.save();
-
-      return res.status(200).json({
-        message: 'Proker berhasil ditandai selesai',
-        data: proker,
-      });
+      proker.status = 1; // Done
+    } else if (hasInProgress) {
+      proker.status = 2; // In Progress
     } else {
-      return res.status(400).json({ message: 'Detail proker belum lengkap, tidak bisa menandai selesai' });
+      proker.status = 0; // Not Started
     }
+
+    await proker.save();
+
+    // Tentukan deskripsi status
+    const statusDescription = {
+      0: 'Not Started',
+      1: 'Done',
+      2: 'In Progress',
+    };
+
+    return res.status(200).json({
+      message: 'Status Proker diperbarui',
+      data: {
+        id_proker: proker.id_proker,
+        status: proker.status,
+        status_description: statusDescription[proker.status],
+      },
+    });
   } catch (error) {
-    console.error("Error during login: ", error);
+    console.error("Error updating proker status: ", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
 
 const allDetailProker = async (req,res) => {
   try {
