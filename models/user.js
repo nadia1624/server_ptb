@@ -47,6 +47,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      gambar: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
       id_divisi: {
         type: DataTypes.INTEGER,
         allowNull: true,
