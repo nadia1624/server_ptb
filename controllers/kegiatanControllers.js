@@ -1,5 +1,5 @@
 const { Kegiatan, AbsensiKegiatan, User } = require("../models");
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
 const path = require("path");
 const fs = require("fs");
 
@@ -113,6 +113,7 @@ class KegiatanController {
   static async getRiwayatAbsensi(req, res) {
     try {
       const userId = req.user.id_user;
+      console.log("User ID dari middleware:", userId);
 
       const riwayatAbsensi = await AbsensiKegiatan.findAll({
         where: { id_user: userId },
@@ -121,6 +122,7 @@ class KegiatanController {
             model: Kegiatan,
             as: "kegiatan",
             attributes: [
+              "id_kegiatan",
               "nama_kegiatan",
               "deskripsi",
               "tanggal_kegiatan",
@@ -140,6 +142,37 @@ class KegiatanController {
         message: "Gagal mendapatkan riwayat absensi",
         error: error.message,
       });
+      console.error("Error saat mendapatkan riwayat absensi:", error);
+    }
+  }
+
+  static async getDetailKegiatan(req, res) {
+    try {
+      const id_kegiatan = req.params.id_kegiatan; // Ambil ID kegiatan dari parameter
+      const id_user = req.user.id_user; // Ambil ID user dari data pengguna yang sedang login
+
+      const kegiatan = await AbsensiKegiatan.findOne({
+        where: {
+          id_kegiatan: id_kegiatan, // Filter berdasarkan ID kegiatan
+          id_user: id_user, // Filter berdasarkan ID user
+        },
+        include: [
+          {
+            model: Kegiatan,
+            as: "kegiatan",
+            attributes: ["nama_kegiatan", "deskripsi"],
+          },
+        ],
+      });
+
+      if (!kegiatan) {
+        return res.status(404).json({ message: "Kegiatan tidak ditemukan." });
+      }
+
+      res.status(200).json(kegiatan); // Kirimkan data kegiatan
+    } catch (error) {
+      console.error("Error fetching detail kegiatan:", error);
+      res.status(500).json({ message: "Terjadi kesalahan pada server." });
     }
   }
 }

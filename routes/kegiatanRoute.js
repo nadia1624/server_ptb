@@ -25,4 +25,10 @@ router.get(
   KegiatanController.getRiwayatAbsensi
 );
 
+router.get(
+  "/kegiatan/:id_kegiatan",
+  authToken.authenticateToken,
+  KegiatanController.getDetailKegiatan
+);
+
 module.exports = router;

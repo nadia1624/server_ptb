@@ -20,7 +20,7 @@ app.use("/auth", authRoutes);
 app.use("/proker", authenticateToken, prokerRouter);
 app.use("/absensi", authenticateToken, absensiRouter);
 app.use("/profil", authenticateToken, profileRouter);
-app.use("/api", kegiatanRoutes);
+app.use("/api", authenticateToken, kegiatanRoutes);
 
 app.get("/", (req, res) => {
   res.render("login");
