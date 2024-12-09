@@ -26,10 +26,11 @@ app.get("/", (req, res) => {
   res.render("login");
 });
 
+
 const PORT = process.env.DB_PORT;
 
 app.use(express.json());
-app.use(otomatisUpdate);
+otomatisUpdate()
 app.get("/api", (req, res) => {
   res.json("Hello world");
 });
