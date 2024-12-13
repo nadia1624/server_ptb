@@ -1,34 +1,39 @@
-const{Proker, detail_proker, Divisi} =  require("../models/index");
+const { Proker, detail_proker, Divisi } = require("../models/index");
 const { where } = require("sequelize");
+const proker = require("../models/proker");
 
-const lihatProker  = async(req,res)=>{
-    try {
-        const { id_divisi } = req.user; // Ambil id_divisi dari user yang terautentikasi
-        const prokers = await Proker.findAll({
-          where: { id_divisi }, // Filter proker berdasarkan divisi
-          include: [{ model: Divisi, as: "divisi" }] // Sertakan informasi divisi
-        });
-        res.status(200).json(prokers);
-      } catch (error) {
-        res.status(500).json({ message: "Gagal mengambil data proker", error });
-      }
-    };
-
- // Mendapatkan detail dari sebuah proker tertentu
- const getProkerDetails = async(req,res)=>{
-    try {
-      const { id } = req.params; // Ambil ID proker dari parameter URL
-      const prokerDetails = await detail_proker.findAll({
-        where: { id_proker: id } // Filter detail berdasarkan ID proker
-      });
-      res.status(200).json(prokerDetails);
-    } catch (error) {
-      res.status(500).json({ message: 'Gagal mengambil detail proker', error });
-    }
+const lihatProker = async (req, res) => {
+  try {
+    const { id_divisi } = req.user; // Ambil id_divisi dari user yang terautentikasi
+    const prokers = await Proker.findAll({
+      where: { id_divisi: id_divisi }, // Filter proker berdasarkan divisi
+      include: [{ model: Divisi, as: "divisi" }], // Sertakan informasi divisi
+    });
+    res.status(200).json({
+      LihatProkerResponse: prokers, // Bungkus array dalam properti
+    });
+    console.log("DATA DIDAPATKAN", prokers);
+  } catch (error) {
+    res.status(500).json({ message: "Gagal mengambil data proker", error });
+    console.log("Error Fetching: ", error);
   }
+};
+
+// Mendapatkan detail dari sebuah proker tertentu
+const getProkerDetails = async (req, res) => {
+  try {
+    const { id } = req.params; // Ambil ID proker dari parameter URL
+    const prokerDetails = await detail_proker.findAll({
+      where: { id_proker: id }, // Filter detail berdasarkan ID proker
+    });
+    res.status(200).json(prokerDetails);
+  } catch (error) {
+    res.status(500).json({ message: "Gagal mengambil detail proker", error });
+  }
+};
 
 // Menambahkan detail baru ke dalam sebuah proker
-const addProkerDetail = async(req,res)=>{
+const addProkerDetail = async (req, res) => {
   try {
     const { id_proker } = req.params;
     const { judul_detail_proker, tanggal } = req.body;
@@ -53,7 +58,7 @@ const addProkerDetail = async(req,res)=>{
 
     // Tambahkan detail baru
     const newDetail = await detail_proker.create({
-      id_proker : id_proker,
+      id_proker: id_proker,
       judul_detail_proker,
       tanggal,
       gambar,
@@ -71,20 +76,20 @@ const addProkerDetail = async(req,res)=>{
       error: error.message,
     });
   }
-}
+};
 
-const lihatDetailProker = async(req,res)=>{
-    try {
-        const id_detailProker = req.params.id_detailproker;
-        const lihatDetailProker = await detail_proker.findOne({
-            where:{id_detailProker}
-        })
-        res.json(lihatDetailProker)
-    } catch (error) {
-        console.error("Error during login: ", error);
-        res.status(500).json({ message: "Internal server error" });
-    }
-}
+const lihatDetailProker = async (req, res) => {
+  try {
+    const id_detailProker = req.params.id_detailproker;
+    const lihatDetailProker = await detail_proker.findOne({
+      where: { id_detailProker },
+    });
+    res.json(lihatDetailProker);
+  } catch (error) {
+    console.error("Error during login: ", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 const updateProkerStatus = async (req, res) => {
   try {
@@ -94,15 +99,19 @@ const updateProkerStatus = async (req, res) => {
     const proker = await Proker.findOne({ where: { id_proker } });
 
     if (!proker) {
-      return res.status(404).json({ message: 'Proker tidak ditemukan' });
+      return res.status(404).json({ message: "Proker tidak ditemukan" });
     }
 
     // Cek apakah semua detail dalam proker ini sudah selesai
     const allDetails = await detail_proker.findAll({ where: { id_proker } });
 
     // Periksa apakah ada detail proker yang dimulai tetapi belum selesai
-    const hasInProgress = allDetails.some(detail => detail.gambar || detail.judul_detail_proker);
-    const allCompleted = allDetails.every(detail => detail.gambar && detail.judul_detail_proker); // Cek apakah semua detail memiliki gambar dan judul
+    const hasInProgress = allDetails.some(
+      (detail) => detail.gambar || detail.judul_detail_proker
+    );
+    const allCompleted = allDetails.every(
+      (detail) => detail.gambar && detail.judul_detail_proker
+    ); // Cek apakah semua detail memiliki gambar dan judul
 
     // Tentukan status berdasarkan kondisi detail
     if (allCompleted) {
@@ -117,13 +126,13 @@ const updateProkerStatus = async (req, res) => {
 
     // Tentukan deskripsi status
     const statusDescription = {
-      0: 'Not Started',
-      1: 'Done',
-      2: 'In Progress',
+      0: "Not Started",
+      1: "Done",
+      2: "In Progress",
     };
 
     return res.status(200).json({
-      message: 'Status Proker diperbarui',
+      message: "Status Proker diperbarui",
       data: {
         id_proker: proker.id_proker,
         status: proker.status,
@@ -136,16 +145,21 @@ const updateProkerStatus = async (req, res) => {
   }
 };
 
-
-const allDetailProker = async (req,res) => {
+const allDetailProker = async (req, res) => {
   try {
-    const allDetailProker = await detail_proker.findAll()
-    res.json(allDetailProker)
+    const allDetailProker = await detail_proker.findAll();
+    res.json(allDetailProker);
   } catch (error) {
     console.error("Error during login: ", error);
     res.status(500).json({ message: "Internal server error" });
   }
-}
+};
 
-
-module.exports ={lihatProker,getProkerDetails,addProkerDetail,updateProkerStatus,lihatDetailProker, allDetailProker}
+module.exports = {
+  lihatProker,
+  getProkerDetails,
+  addProkerDetail,
+  updateProkerStatus,
+  lihatDetailProker,
+  allDetailProker,
+};
