@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const app = express();
+const path = require("path");
 
 dotenv.config();
 
@@ -26,11 +27,12 @@ app.get("/", (req, res) => {
   res.render("login");
 });
 
-
 const PORT = process.env.DB_PORT;
 
-app.use(express.json());
-otomatisUpdate()
+app.use(express.static("uploads"));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+otomatisUpdate();
 app.get("/api", (req, res) => {
   res.json("Hello world");
 });
