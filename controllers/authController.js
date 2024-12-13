@@ -32,7 +32,9 @@ module.exports.login = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const token = jwt.sign({ user }, process.env.SECRET_TOKEN);
+    const token = jwt.sign({ user }, process.env.SECRET_TOKEN, {
+      expiresIn: "1d",
+    });
     console.log("Token created successfully");
 
     // Kirim token ke client
