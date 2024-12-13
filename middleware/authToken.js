@@ -8,7 +8,10 @@ const authenticateToken = (req, res, next) => {
   const secret = process.env.SECRET_TOKEN;
 
   const authHeader = req.headers["authorization"];
+  console.log("Full Auth Header:", authHeader); // Log full header
+
   const token = authHeader && authHeader.split(" ")[1];
+  console.log("Extracted Token:", token); // Log extracted token
 
   if (!token) {
     console.log("No token provided");
