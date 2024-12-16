@@ -26,7 +26,7 @@ const getProkerDetails = async (req, res) => {
     const prokerDetails = await detail_proker.findAll({
       where: { id_proker: id }, // Filter detail berdasarkan ID proker
     });
-    res.status(200).json(prokerDetails);
+    res.status(200).json({ data: prokerDetails });
   } catch (error) {
     res.status(500).json({ message: "Gagal mengambil detail proker", error });
   }
