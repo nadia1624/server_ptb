@@ -59,6 +59,7 @@ class KegiatanController {
   static async isiAbsensiKegiatan(req, res) {
     try {
       const { id_kegiatan } = req.params;
+      console.log("Id Kegiatan", id_kegiatan);
       const userId = req.user.id_user;
       const gambar = req.file; // File upload dari middleware multer
 
@@ -76,25 +77,40 @@ class KegiatanController {
         where: {
           id_user: userId,
           id_kegiatan: id_kegiatan,
+          status_absensi: 2,
         },
       });
 
       if (existingAbsensi) {
         return res.status(400).json({
           message: "Absensi mu sudah tercatat!",
+          status: "success",
+          data: {
+            id_user: userId,
+            id_kegiatan: id_kegiatan,
+            gambar: gambar.filename,
+            statusAbsen: 2,
+            namaKegiatan: kegiatan.nama_kegiatan,
+          },
         });
       }
 
       // Simpan absensi
-      const absensiKegiatan = await AbsensiKegiatan.create({
-        id_user: userId,
-        id_kegiatan: id_kegiatan,
-        status_absensi: 2, // Berhasil absen
-        gambar: gambar ? `/uploads/${gambar.filename}` : null,
-      });
+      const absensiKegiatan = await AbsensiKegiatan.update(
+        {
+          status_absensi: 2, // Berhasil absen
+          gambar: gambar.filename,
+        },
+        {
+          where: {
+            id_kegiatan: id_kegiatan,
+            id_user: userId,
+          },
+        }
+      );
 
       res.status(201).json({
-        message: "Absensi mu sudah tercatat!",
+        message: "Absensi mu berhasil dicatat!",
         status: "success",
         data: {
           deskripsi: kegiatan.deskripsi,
@@ -106,6 +122,7 @@ class KegiatanController {
         message: "Gagal mengisi absensi",
         error: error.message,
       });
+      console.log("Error: ", error);
     }
   }
 

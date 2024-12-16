@@ -5,15 +5,33 @@ const { authenticateToken } = require("../middleware/authToken");
 const upload = require("../middleware/upload");
 
 // Rute untuk menampilkan gambar profil
-router.get("/profile/image", authenticateToken, ProfileController.getProfileImage);
+router.get(
+  "/profile/data",
+  authenticateToken,
+  ProfileController.getDataProfile
+);
 
 // Rute untuk mengunggah gambar profil
-router.post("/profile/upload", authenticateToken, upload.single("gambar"), ProfileController.uploadProfileImage);
+router.post(
+  "/profile/upload",
+  authenticateToken,
+  upload.single("gambar"),
+  ProfileController.uploadProfileImage
+);
 
 // Rute untuk mengganti gambar profil
-router.put("/profile/image", authenticateToken, upload.single("gambar"), ProfileController.updateProfileImage);
+router.put(
+  "/profile/image",
+  authenticateToken,
+  upload.single("gambar"),
+  ProfileController.updateProfileImage
+);
 
 // Rute untuk mengganti password (sudah ada)
-router.patch("/changepassword", authenticateToken, ProfileController.changePassword);
+router.patch(
+  "/changepassword",
+  authenticateToken,
+  ProfileController.changePassword
+);
 
 module.exports = router;
