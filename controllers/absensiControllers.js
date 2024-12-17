@@ -6,7 +6,12 @@ const {Op} = require('sequelize');
 const lihatAbsensi = async(req,res)=>{
     try {
         const lihatAbsensi = await Absensi.findAll({
-            where:{id_user:req.user.id_user}
+            where:{id_user:req.user.id_user},
+            include : {
+                model : Rekapan,
+                as : "rekapan",
+                attributes : ["id_rekapan", "minggu_ke"]
+            }
         })
         res.json(lihatAbsensi)
     } catch (error) {
@@ -21,6 +26,11 @@ const lihatDetailAbsensi = async(req,res)=>{
         const lihatDetailAbsensi = await Absensi.findOne({
             where:{id_rekapan,
                 id_user:req.user.id_user
+            },
+            include : {
+                model : Rekapan,
+                as : "rekapan",
+                attributes : ["id_rekapan", "minggu_ke"]
             }
         })
         res.json(lihatDetailAbsensi)

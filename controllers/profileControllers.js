@@ -34,7 +34,7 @@ const changePassword = async (req, res) => {
       },
       { where: { id_user: findAccount.id_user } }
     );
-    return res.status(200).json(updatePassword);
+    return res.status(200).json({message: "Berhasil mengubah password"});
   } catch (error) {
     console.error("Error during login: ", error);
     res.status(500).json({ message: "Internal server error" });
