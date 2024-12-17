@@ -90,7 +90,7 @@ class KegiatanController {
             id_kegiatan: id_kegiatan,
             gambar: gambar.filename,
             statusAbsen: 2,
-            namaKegiatan: kegiatan.nama_kegiatan,
+            namaKegiatan: Kegiatan.nama_kegiatan,
           },
         });
       }

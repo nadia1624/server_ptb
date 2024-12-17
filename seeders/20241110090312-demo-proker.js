@@ -23,7 +23,8 @@ module.exports = {
       "Prokers",
       [
         {
-          id_divisi: randomDivisi(),
+          id_proker: 1,
+          id_divisi: 1,
           nama_proker: "Bazar",
           status: "0",
           deskripsi:
@@ -32,7 +33,8 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          id_divisi: randomDivisi(),
+          id_proker: 2,
+          id_divisi: 1,
           nama_proker: "Menghadiri Undangan Kegiatan",
           status: "0",
           deskripsi:
@@ -41,7 +43,8 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          id_divisi: randomDivisi(),
+          id_proker: 3,
+          id_divisi: 2,
           nama_proker: "Kaderisasi",
           status: "0",
           deskripsi:
@@ -50,7 +53,8 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          id_divisi: randomDivisi(),
+          id_proker: 4,
+          id_divisi: 2,
           nama_proker: "ISL",
           status: "0",
           deskripsi:
@@ -59,7 +63,8 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          id_divisi: randomDivisi(),
+          id_proker: 5,
+          id_divisi: 2,
           nama_proker: "Pemberitahuan Seminar Hasil Mahasiswa",
           status: "0",
           deskripsi:

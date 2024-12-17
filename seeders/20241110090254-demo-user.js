@@ -24,7 +24,7 @@ module.exports = {
       [
         {
           id_user: 1,
-          id_divisi: randomDivisi(),
+          id_divisi: 1,
           nim: "2211521004",
           email: "nadyadearihanifah@gmail.com",
           password: await bcrypt.hash("nadia1234", 10), // Gunakan hash password sebenarnya pada aplikasi production
@@ -38,7 +38,7 @@ module.exports = {
         },
         {
           id_user: 2,
-          id_divisi: randomDivisi(),
+          id_divisi: 2,
           nim: "2211523010",
           email: "azhrameisa@gmail.com",
           password: await bcrypt.hash("meisa1234", 10),
@@ -52,7 +52,7 @@ module.exports = {
         },
         {
           id_user: 3,
-          id_divisi: randomDivisi(),
+          id_divisi: 1,
           nim: "2211523014",
           email: "raniashofi@gmail.com",
           password: await bcrypt.hash("rania1234", 10),

@@ -4,6 +4,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Kegiatans', [
       {
+        id_kegiatan: 1,
         nama_kegiatan: 'Workshop UI/UX',
         deskripsi: 'Workshop tentang UI/UX Design untuk mahasiswa.',
         jam_kegiatan: '10:00',
@@ -13,6 +14,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
+        id_kegiatan: 2,
         nama_kegiatan: 'Seminar Teknologi',
         deskripsi: 'Seminar tentang perkembangan teknologi terbaru.',
         jam_kegiatan: '13:00',
@@ -22,6 +24,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
+        id_kegiatan: 3,
         nama_kegiatan: 'Pelatihan Pemrograman Python',
         deskripsi: 'Pelatihan dasar pemrograman Python untuk pemula.',
         jam_kegiatan: '09:00',
@@ -31,6 +34,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
+        id_kegiatan: 4,
         nama_kegiatan: 'Kursus Data Science',
         deskripsi: 'Kursus mengenai data science dan analisis data.',
         jam_kegiatan: '14:00',
