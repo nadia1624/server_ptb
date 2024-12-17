@@ -1,10 +1,17 @@
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
+
+// Pastikan folder "uploads" ada
+const uploadDir = path.join(__dirname, "../uploads");
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true }); // Buat folder secara rekursif jika belum ada
+}
 
 // Konfigurasi Penyimpanan File
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "../uploads"));
+    cb(null, uploadDir); // Gunakan folder yang sudah dipastikan ada
   },
   filename: function (req, file, cb) {
     // Tambahkan pengecekan ekstensi file
