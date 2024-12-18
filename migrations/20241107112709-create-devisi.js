@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Divisis', {
+    await queryInterface.createTable('divisis', {
       id_divisi: {
         allowNull: false,
         autoIncrement: true,
@@ -20,9 +20,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    }  
+  );
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Divisis');
+    await queryInterface.dropTable('divisis');
   }
 };

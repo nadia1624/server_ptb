@@ -12,7 +12,7 @@ module.exports = {
       id_proker: {
         type: Sequelize.INTEGER,
         references: {
-            model: 'Prokers', 
+            model: 'prokers', 
             key: 'id_proker'}
       },
       judul_detail_proker: {
@@ -32,6 +32,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
+    },
+    {
+      tableName: 'detail_prokers'
     });
   },
   async down(queryInterface, Sequelize) {

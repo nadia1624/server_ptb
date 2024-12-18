@@ -2,12 +2,12 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("AbsensiKegiatans", {
+    await queryInterface.createTable("absensikegiatans", {
       id_user: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         references: {
-          model: "Users",
+          model: "users",
           key: "id_user",
         },
         onUpdate: "CASCADE",
@@ -17,7 +17,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         primaryKey: true,
         references: {
-          model: "Kegiatans",
+          model: "kegiatans",
           key: "id_kegiatan",
         },
         onUpdate: "CASCADE",
@@ -39,10 +39,13 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
+    },
+    {
+      tableName: 'absensikegiatans'
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("AbsensiKegiatans");
+    await queryInterface.dropTable("absensikegiatans");
   },
 };

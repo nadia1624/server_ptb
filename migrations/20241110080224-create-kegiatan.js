@@ -3,7 +3,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Kegiatans', {
+    await queryInterface.createTable('kegiatans', {
       id_kegiatan: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -40,10 +40,13 @@ module.exports = {
         allowNull: false,
         defaultValue: Sequelize.NOW
       }
+    },
+    {
+      tableName: 'kegiatans'
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Kegiatans');
+    await queryInterface.dropTable('kegiatans');
   }
 };

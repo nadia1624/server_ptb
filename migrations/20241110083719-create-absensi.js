@@ -2,13 +2,13 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Absensis', {
+    await queryInterface.createTable('absensis', {
         id_rekapan: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             allowNull: false,
             references: {
-              model: 'Rekapans',
+              model: 'rekapans',
               key: 'id_rekapan'
             },
             onUpdate: 'CASCADE',
@@ -19,7 +19,7 @@ module.exports = {
             primaryKey: true,
             allowNull: false,
             references: {
-              model: 'Users',
+              model: 'users',
               key: 'id_user'
             },
             onUpdate: 'CASCADE',
@@ -43,9 +43,12 @@ module.exports = {
             allowNull: false,
             defaultValue: Sequelize.NOW
           }
+        },
+        {
+          tableName: 'absensis'
         });
       },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Absensis');
+    await queryInterface.dropTable('absensis');
   }
 };
