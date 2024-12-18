@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       gambar: DataTypes.STRING,
     },
     {
-      tableName: "AbsensiKegiatans", // Sesuaikan dengan nama tabel
+      tableName: "absensikegiatans", // Sesuaikan dengan nama tabel
     }
   );
 

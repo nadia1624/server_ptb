@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('Divisis', [
+    await queryInterface.bulkInsert('divisis', [
       {id_divisi: 1, nama_divisi: 'Inti', createdAt: new Date(), updatedAt: new Date() },
       {id_divisi: 2, nama_divisi: 'PSDM', createdAt: new Date(), updatedAt: new Date() },
       {id_divisi: 3, nama_divisi: 'External', createdAt: new Date(), updatedAt: new Date() },
@@ -15,6 +15,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('Divisis', null, {});
+    await queryInterface.bulkDelete('divisis', null, {});
   }
 };

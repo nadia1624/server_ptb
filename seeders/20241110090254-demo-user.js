@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const divisis = await queryInterface.sequelize.query(
-      `SELECT id_divisi FROM Divisis;`,
+      `SELECT id_divisi FROM divisis;`,
       { type: queryInterface.sequelize.QueryTypes.SELECT }
     );
 
@@ -20,7 +20,7 @@ module.exports = {
       divisis[Math.floor(Math.random() * divisis.length)].id_divisi;
 
     await queryInterface.bulkInsert(
-      "Users",
+      "users",
       [
         {
           id_user: 1,
@@ -70,6 +70,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete("Users", null, {});
+    await queryInterface.bulkDelete("users", null, {});
   },
 };

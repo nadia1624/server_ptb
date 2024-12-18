@@ -4,13 +4,13 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     // Ambil data id_user dari tabel Users
     const users = await queryInterface.sequelize.query(
-      `SELECT id_user FROM Users;`,
+      `SELECT id_user FROM users;`,
       { type: queryInterface.sequelize.QueryTypes.SELECT }
     );
 
     // Ambil data id_kegiatan dari tabel Kegiatans
     const kegiatans = await queryInterface.sequelize.query(
-      `SELECT id_kegiatan FROM Kegiatans;`,
+      `SELECT id_kegiatan FROM kegiatans;`,
       { type: queryInterface.sequelize.QueryTypes.SELECT }
     );
 
@@ -36,11 +36,11 @@ module.exports = {
     });
 
     // Insert data absensi ke database
-    await queryInterface.bulkInsert("AbsensiKegiatans", absensiKegiatans, {});
+    await queryInterface.bulkInsert("absensikegiatans", absensiKegiatans, {});
   },
 
   down: async (queryInterface, Sequelize) => {
     // Hapus semua data di tabel AbsensiKegiatans
-    await queryInterface.bulkDelete("AbsensiKegiatans", null, {});
+    await queryInterface.bulkDelete("absensikegiatans", null, {});
   },
 };
