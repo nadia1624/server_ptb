@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       Divisi.hasMany(models.Proker, {
         foreignKey: 'id_divisi',  
-        as: 'prokers'         
+        // as: 'prokers'         
       });    
     }
   }
