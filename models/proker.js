@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Proker.belongsTo(models.Divisi, {
         foreignKey: 'id_divisi',  // Foreign key in User
-        as: 'divisi'               // Optional alias for relation
+        as: 'Divisi'               // Optional alias for relation
       });
       Proker.hasMany(models.detail_proker,{
         foreignKey: 'id_proker',  
@@ -49,6 +49,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Proker',
+    tableName: 'prokers'
   });
   return Proker;
 };
