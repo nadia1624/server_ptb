@@ -7,7 +7,7 @@ const lihatProker = async (req, res) => {
     const { id_divisi } = req.user; // Ambil id_divisi dari user yang terautentikasi
     const prokers = await Proker.findAll({
       where: { id_divisi: id_divisi }, // Filter proker berdasarkan divisi
-      include: [{ model: Divisi, as: "divisi" }], // Sertakan informasi divisi
+      include: [{ model: Divisi, as: "Divisi" }], // Sertakan informasi divisi
     });
     res.status(200).json({
       LihatProkerResponse: prokers, // Bungkus array dalam properti
