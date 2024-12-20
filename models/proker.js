@@ -4,6 +4,7 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Proker extends Model {
+
     static associate(models) {
       Proker.belongsTo(models.Divisi, {
         foreignKey: 'id_divisi',  // Foreign key in User

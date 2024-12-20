@@ -1,5 +1,5 @@
 const { Proker, detail_proker, Divisi } = require("../models/index");
-const { where } = require("sequelize");
+const { where, Model } = require("sequelize");
 const proker = require("../models/proker");
 
 const lihatProker = async (req, res) => {
@@ -147,8 +147,19 @@ const updateProkerStatus = async (req, res) => {
 
 const allDetailProker = async (req, res) => {
   try {
-    const allDetailProker = await detail_proker.findAll();
-    res.json(allDetailProker);
+    const allDetailProker = await detail_proker.findAll({
+      include: {
+        model: Proker,
+        as : 'proker',
+        include : {
+          model: Divisi,
+          as: 'Divisi'
+        }
+      }
+    }); 
+    res.json({
+      data: allDetailProker
+    });
   } catch (error) {
     console.error("Error during login: ", error);
     res.status(500).json({ message: "Internal server error" });
