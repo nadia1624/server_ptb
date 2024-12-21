@@ -20,11 +20,10 @@ router.post(
 );
 
 // Rute untuk mengganti gambar profil
-router.put(
+router.get(
   "/profile/image",
   authenticateToken,
-  upload.single("gambar"),
-  ProfileController.updateProfileImage
+  ProfileController.getPhotoProfile
 );
 
 // Rute untuk mengganti password (sudah ada)
