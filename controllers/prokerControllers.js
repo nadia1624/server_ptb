@@ -12,7 +12,6 @@ const lihatProker = async (req, res) => {
     res.status(200).json({
       LihatProkerResponse: prokers, // Bungkus array dalam properti
     });
-    console.log("DATA DIDAPATKAN", prokers);
   } catch (error) {
     res.status(500).json({ message: "Gagal mengambil data proker", error });
     console.log("Error Fetching: ", error);
@@ -37,7 +36,7 @@ const addProkerDetail = async (req, res) => {
   try {
     const { id_proker } = req.params;
     const { judul_detail_proker, tanggal } = req.body;
-    const gambar = req.file ? req.file.filename : null; // Simpan nama file jika ada
+    const gambar = req.file.filename; // Simpan nama file jika ada
 
     // Ambil `id_divisi` dari user yang sedang login
     const { id_divisi } = req.user;
@@ -150,15 +149,15 @@ const allDetailProker = async (req, res) => {
     const allDetailProker = await detail_proker.findAll({
       include: {
         model: Proker,
-        as : 'proker',
-        include : {
+        as: "proker",
+        include: {
           model: Divisi,
-          as: 'Divisi'
-        }
-      }
-    }); 
+          as: "Divisi",
+        },
+      },
+    });
     res.json({
-      data: allDetailProker
+      data: allDetailProker,
     });
   } catch (error) {
     console.error("Error during login: ", error);
