@@ -23,13 +23,15 @@ const storage = multer.diskStorage({
   },
 });
 
+console.log(this.fields);
+
 // Middleware Upload
 const upload = multer({
   storage: storage,
   limits: { fileSize: 2 * 1024 * 1024 }, // 2MB
   fileFilter: (req, file, cb) => {
     // Double check MIME type
-    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg", "image/*"];
     if (!allowedTypes.includes(file.mimetype)) {
       return cb(
         new Error("Hanya format JPEG, PNG, dan JPG yang diizinkan"),

@@ -36,7 +36,7 @@ const addProkerDetail = async (req, res) => {
   try {
     const { id_proker } = req.params;
     const { judul_detail_proker, tanggal } = req.body;
-    const gambar = req.file.filename; // Simpan nama file jika ada
+    const gambar = req.file.filename;
 
     // Ambil `id_divisi` dari user yang sedang login
     const { id_divisi } = req.user;
