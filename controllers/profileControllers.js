@@ -34,7 +34,7 @@ const changePassword = async (req, res) => {
       },
       { where: { id_user: findAccount.id_user } }
     );
-    return res.status(200).json({message: "Berhasil mengubah password"});
+    return res.status(200).json({ message: "Berhasil mengubah password" });
   } catch (error) {
     console.error("Error during login: ", error);
     res.status(500).json({ message: "Internal server error" });
@@ -80,7 +80,10 @@ const getDataProfile = async (req, res) => {
 // Mengunggah gambar profil
 const uploadProfileImage = async (req, res) => {
   try {
-    if (!req.file) {
+    console.log("File received:", req.file);
+    console.log("Gambar: ", req.file.filename);
+
+    if (!req.file.filename) {
       return res.status(400).json({ message: "Tidak ada file yang diunggah" });
     }
 
@@ -104,7 +107,7 @@ const uploadProfileImage = async (req, res) => {
 };
 
 // Mengganti gambar profil
-const updateProfileImage = async (req, res) => {
+const getPhotoProfile = async (req, res) => {
   try {
     const user = await User.findByPk(req.user.id_user);
 
@@ -112,28 +115,12 @@ const updateProfileImage = async (req, res) => {
       return res.status(404).json({ message: "User tidak ditemukan" });
     }
 
-    // Hapus file gambar lama dari folder uploads
-    if (user.gambar) {
-      const oldImagePath = path.join(__dirname, "../uploads", user.gambar);
-      if (fs.existsSync(oldImagePath)) {
-        fs.unlinkSync(oldImagePath);
-      }
-    }
+    const imagePath = path.join(__dirname, "../uploads", user.gambar);
 
-    // Perbarui gambar baru
-    if (!req.file) {
-      return res.status(400).json({ message: "Tidak ada file yang diunggah" });
-    }
-
-    user.gambar = req.file.filename;
-    await user.save();
-
-    res.status(200).json({
-      message: "Gambar berhasil diperbarui",
-      filename: req.file.filename,
-    });
+    // Kirim file gambar
+    res.sendFile(imagePath);
   } catch (error) {
-    console.error("Error updating profile image:", error);
+    console.error("Error fetching profile image:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -142,5 +129,5 @@ module.exports = {
   changePassword,
   getDataProfile,
   uploadProfileImage,
-  updateProfileImage,
+  getPhotoProfile,
 };

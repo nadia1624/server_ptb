@@ -46,7 +46,6 @@ app.get("/api", (req, res) => {
 });
 app.get("/test", otomatisUpdate);
 
-// Tempat untuk menyimpan token (simulasi database)
 // Simpan tokens dalam array
 let userTokens = [];
 
@@ -69,9 +68,10 @@ app.post("/register-token", (req, res) => {
 
 // Endpoint untuk mengirim notifikasi
 app.post("/send-notification", async (req, res) => {
-  const { title, body } = req.body;
+  const { title, body, excludeToken } = req.body;
   console.log("Sending notification:", { title, body });
   console.log("Available tokens:", userTokens);
+  console.log("Exclude tokens: ", excludeToken);
 
   if (!title || !body) {
     return res.status(400).send({ message: "Judul dan Body harus disediakan" });
@@ -93,8 +93,19 @@ app.post("/send-notification", async (req, res) => {
       },
     };
 
+    // Filter tokens yang tidak null/undefined dan bukan token pengirim
+    const recipientTokens = userTokens.filter(
+      (token) => token && token !== excludeToken
+    );
+
+    if (recipientTokens.length === 0) {
+      return res.status(200).send({
+        message: "Tidak ada penerima notifikasi yang tersedia",
+      });
+    }
+
     // Kirim ke setiap token satu per satu
-    const sendPromises = userTokens.map((token) =>
+    const sendPromises = recipientTokens.map((token) =>
       admin.messaging().send({
         ...message,
         token: token, // Send to single token
